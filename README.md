@@ -3,7 +3,7 @@
 
 ### 贝塞尔曲线原理 图示如下：
 
-![贝塞尔曲线原理图]("https://jingyan.baidu.com/event/img/hxfls252162.jpg");
+![贝塞尔曲线原理图](https://github.com/nixinyudada/beziercurve/blob/master/img/biziercurve_3.gif?raw=true);
 
 
 ```javascript
