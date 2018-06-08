@@ -3,7 +3,8 @@
 
 ### 贝塞尔曲线原理 图示如下：
 
-![]("https://images0.cnblogs.com/blog2015/730563/201503/171523509541762.gif");
+
+![原理图]("https://www.baidu.com/img/540%20258_c622d80176946df7f7b8d1997edf57d4.gif");
 
 
 ```javascript
