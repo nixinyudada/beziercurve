@@ -8,31 +8,237 @@
 <style type="text/css">
 body, h1{margin:0;}
 canvas{margin: 20px; }
+.container{
+    width: 800px;
+    height: auto;
+    margin: 50px auto;
+}
+    *{
+        user-select: none;
+    }
 </style>
 </head>
-<body onload="draw()">
-<h1>三次贝塞尔曲线</h1>
-<canvas id="canvas" width=200 height=200 style="border: 1px solid #ccc;"></canvas>
+<body>
+
+<div class="container">
+    <h1>三次贝塞尔曲线</h1>
+    <canvas id="canvas" width=200 height=200 style="border: 1px solid #ccc;"></canvas>
+    <h4>P1:</h4>
+    <button id="p1_up">up</button>
+    <button id="p1_down">down</button>
+    <button id="p1_left">left</button>
+    <button id="p1_right">right</button>
+    <h4>P2:</h4>
+    <button id="p2_up">up</button>
+    <button id="p2_down">down</button>
+    <button id="p2_left">left</button>
+    <button id="p2_right">right</button>
+
+
+</div>
 <script>
-function draw() {
+
+window.onload = function(){
+	var obj = {
+		"p1_1":60,
+		"p1_2":30,
+		"p2_1":170,
+		"p2_2":30
+	}
+    draw(obj)
+
+    var p1_up = document.getElementById("p1_up");
+    var p1_down = document.getElementById("p1_down");
+    var p1_left = document.getElementById("p1_left");
+    var p1_right = document.getElementById("p1_right");
+
+    var p2_up = document.getElementById("p2_up");
+    var p2_down = document.getElementById("p2_down");
+    var p2_left = document.getElementById("p2_left");
+    var p2_right = document.getElementById("p2_right");
+
+
+
+    var btn = document.getElementsByTagName("button");
+
+    control1("p1_up",obj,"up");
+    control1("p1_down",obj,"down");
+    control1("p1_left",obj,"left");
+    control1("p1_right",obj,"right");
+
+
+
+    control2("p2_up",obj,"up");
+    control2("p2_down",obj,"down");
+    control2("p2_left",obj,"left");
+    control2("p2_right",obj,"right");
+
+
+
+    /*document.getElementById("right").onmouseover = function(){
+        control("up",obj,"up");
+        var v = setInterval(function(){
+            obj.p2_1++;
+            clear();
+            draw(obj);
+        },30);
+
+        document.getElementById("right").onclick = function(){
+            clearInterval(v);
+        }
+    }
+*/
+	
+}
+
+
+
+
+function draw(obj) {
 var canvas=document.getElementById('canvas');
 var context=canvas.getContext('2d'); 
+
+
 //绘制起始点、控制点、终点 
-context.beginPath(); 
-context.moveTo(25,175); 
-/*context.lineTo(60,80);*/
-context.lineTo(60,30); 
-context.lineTo(170,30); 
-context.lineTo(170,175); 
-context.stroke(); 
+context.beginPath();
+    context.moveTo(25,175);
+    /*context.lineTo(60,80);*/
+    context.lineTo(obj.p1_1,obj.p1_2);
+    context.lineTo(obj.p2_1,obj.p2_2);
+    context.lineTo(170,175);
+    context.strokeStyle = "#000";
+    context.stroke();
 //绘制3次贝塞尔曲线 
 context.beginPath(); 
 context.moveTo(25,175); 
 //context.bezierCurveTo(60,80,150,30,170,150); 
-context.bezierCurveTo(60,30,170,30,170,175); 
+context.bezierCurveTo(obj.p1_1,obj.p1_2,obj.p2_1,obj.p2_2,170,175); 
 context.strokeStyle = "red"; 
-context.stroke(); 
+context.stroke();
+
 }
+
+function clear(){
+	var canvas=document.getElementById('canvas');
+    var context=canvas.getContext('2d');
+    context.clearRect(0,0,canvas.width,canvas.height)
+}
+
+
+function control1(id,obj,str){
+    document.getElementById(id).onmouseover = function(){
+    var v;
+    switch (str){
+        case "up":
+            if(obj.p1_2 < 0 ){
+                return
+            }
+            v = setInterval(function(){
+                obj.p1_2--;
+                clear()
+                draw(obj);
+                obj.p1_2 < 0?clearInterval(v):console.log(obj.p1_2);
+            },30)
+            break;
+        case "down":
+            if(obj.p1_2 > 199 ){
+                return
+            }
+            v = setInterval(function(){
+                obj.p1_2++;
+                clear()
+                draw(obj);
+                obj.p1_2 > 199?clearInterval(v):console.log(obj.p1_2);
+            },30)
+            break;
+        case "left":
+            if(obj.p1_1 < 0 ){
+                return
+            }
+            v = setInterval(function(){
+                obj.p1_1--;
+                clear()
+                draw(obj);
+                obj.p1_1 < 0?clearInterval(v):console.log(obj.p1_1);
+            },30)
+            break;
+        case "right":
+            if(obj.p1_1 > 199 ){
+                return
+            }
+            v = setInterval(function(){
+                obj.p1_1++;
+                clear()
+                draw(obj);
+                obj.p1_1 > 199?clearInterval(v):console.log(obj.p1_1);
+            },30)
+            break;
+    }
+
+    document.getElementById(id).onclick = function(){
+        clearInterval(v)
+    }
+}
+}
+
+
+
+function control2(id,obj,str){
+    document.getElementById(id).onmouseover = function(){
+        var v;
+        switch (str){
+            case "up":
+                if(obj.p2_2 < 0 ){
+                   return
+                }
+                v = setInterval(function(){
+                    obj.p2_2--;
+                    clear()
+                    draw(obj);
+                    obj.p2_2 < 0?clearInterval(v):console.log(obj.p2_2);
+                },30)
+                break;
+            case "down":
+                if(obj.p2_2 > 199 ){
+                    return
+                }
+                v = setInterval(function(){
+                    obj.p2_2++;
+                    clear()
+                    draw(obj);
+                    obj.p2_2 > 199?clearInterval(v):console.log(obj.p2_2);
+                },30)
+                break;
+            case "left":
+                if(obj.p2_1 < 0 ){
+                    return
+                }
+                v = setInterval(function(){
+                    obj.p2_1--;
+                    clear()
+                    draw(obj);
+                    obj.p2_1 < 0?clearInterval(v):console.log(obj.p2_1);
+                },30)
+                break;
+            case "right":
+                if(obj.p2_1 > 199 ){
+                    return
+                }
+                v = setInterval(function(){
+                    obj.p2_1++;
+                    clear()
+                    draw(obj);
+                    obj.p2_1 > 199?clearInterval(v):console.log(obj.p2_1);
+                },30)
+                break;
+        }
+
+        document.getElementById(id).onclick = function(){
+            clearInterval(v)
+        }
+    }
+}
+
 </script>
 </body>
 </html>
