@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>2次贝塞尔曲线</title>
+</head>
+<style type="text/css">
+    *{
+        margin: 0;
+        padding: 0;
+        font-family: "微软雅黑 Light";
+    }
+    .container{
+    }
+    .main_box{
+        width: 900px;
+        height: 600px;
+        margin: 20px auto;
+    }
+    canvas{
+        width: 600px;
+        height: 600px;
+        border: 1px solid #000000;
+        box-sizing:border-box;
+        float: left;
+    }
+    .control{
+        width: 280px;
+        height: 600px;
+        box-sizing: border-box;
+        float: right;
+    }
+
+    /*表格 control*/
+    table{
+        width: 200px;
+        margin: 10px 40px;
+        height: 200px;
+    }
+    th,td{
+        width: 50%;
+        text-align: center;
+    }
+    td > span {
+        border-radius: 25px;
+        display: block;
+        width: 25px;
+        height: 25px;
+        background: #ccc;
+        cursor: pointer;
+        margin: 0 auto;
+
+    }
+
+    .active{
+        background: #40E0D0;
+    }
+</style>
+<body>
+<div class="container">
+    <br>
+    <br>
+    <h1 style="text-align: center">二次贝塞尔曲线</h1>
+    <div class="main_box">
+        <div class="main_view">
+            <canvas width="600" height="600" id="canvas"></canvas>
+        </div>
+        <div class="control">
+            <table border="1">
+                <tr>
+                    <th>控制点/端点</th>
+                    <th>按下控制</th>
+                </tr>
+                 <tr>
+                     <td>P1</td>
+                     <td><span class="active" id="p1"></span></td>
+                 </tr>
+                <tr>
+                    <td>P2</td>
+                    <td><span id="p2"></span></td>
+                </tr>
+                <tr>
+                    <td>P3</td>
+                    <td><span id="p3"></span></td>
+                </tr>
+                <tr>
+                    <td>P4</td>
+                    <td><span id="p4"></span></td>
+                </tr>
+                <tr>
+                    <td>clear subline</td>
+                    <td><span id="clear"></span></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    var btn_span = document.getElementsByTagName("span");
+    var canvas = document.getElementById("canvas");
+    var context = canvas.getContext("2d");
+    var arg = [50,450,150,50,480,80,550,450];
+
+
+    window.onload = function(){
+        dragCurve(arg)
+        for(var i=0;i<btn_span.length-1;i++){
+            btn_span[i].addEventListener("click",addActive);
+        }
+
+        // p0 端点
+        var t = true;
+        if(t){
+            canvas.onmousedown = function (ev) {
+                var e = ev || event;
+                context.clearRect(0,0,canvas.width,canvas.height);
+                context.beginPath();
+                context.arc(arg[0],arg[1],10,0,Math.PI*2);
+                context.fillStyle = "#ccc";
+                context.fill();
+
+                if(context.isPointInPath(e.offsetX,e.offsetY)){
+                    canvas.onmousemove = function (ev) {
+                        var e = ev || event;
+                        arg[0] = e.offsetX;
+                        arg[1] = e.offsetY;
+                        console.log(e.offsetX);
+                        context.clearRect(0,0,canvas.width,canvas.height);
+                        dragCurve(arg)
+                    }
+                }
+                dragCurve(arg)
+            }
+            t = false;
+        }
+        btn_span[0].onclick = function () {
+            canvas.onmousedown = function (ev) {
+                var e = ev || event;
+                context.clearRect(0,0,canvas.width,canvas.height);
+                context.beginPath();
+                context.arc(arg[0],arg[1],10,0,Math.PI*2);
+                context.fillStyle = "#ccc";
+                context.fill();
+
+                if(context.isPointInPath(e.offsetX,e.offsetY)){
+                    canvas.onmousemove = function (ev) {
+                        var e = ev || event;
+                        arg[0] = e.offsetX;
+                        arg[1] = e.offsetY;
+                        console.log(e.offsetX);
+                        context.clearRect(0,0,canvas.width,canvas.height);
+                        dragCurve(arg)
+                    }
+                }
+                dragCurve(arg)
+            }
+
+        }
+
+
+        // p1 端点
+        btn_span[1].onclick = function () {
+            canvas.onmousedown = function (ev) {
+                var e = ev || event;
+                context.beginPath();
+                context.arc(arg[2],arg[3],10,0,Math.PI*2);
+                context.fillStyle = "#ccc";
+                context.fill();
+
+                if(context.isPointInPath(e.offsetX,e.offsetY)){
+                    canvas.onmousemove = function (ev) {
+                        var e = ev || event;
+                        arg[2] = e.offsetX;
+                        arg[3] = e.offsetY;
+                        console.log(e.offsetX);
+                        context.clearRect(0,0,canvas.width,canvas.height);
+                        dragCurve(arg)
+                    }
+                }
+                dragCurve(arg);
+
+            }
+
+        }
+
+
+        // p2 端点
+        btn_span[2].onclick = function () {
+            canvas.onmousedown = function (ev) {
+                var e = ev || event;
+                context.clearRect(0,0,canvas.width,canvas.height);
+                context.beginPath();
+                context.arc(arg[4],arg[5],10,0,Math.PI*2);
+                context.fillStyle = "#ccc";
+                context.fill();
+
+                if(context.isPointInPath(e.offsetX,e.offsetY)){
+                    canvas.onmousemove = function (ev) {
+                        var e = ev || event;
+                        arg[4] = e.offsetX;
+                        arg[5] = e.offsetY;
+                        context.clearRect(0,0,canvas.width,canvas.height);
+                        dragCurve(arg)
+                    }
+                }
+                dragCurve(arg);
+            }
+
+        }
+
+
+
+        // p3 端点
+        btn_span[3].onclick = function () {
+            canvas.onmousedown = function (ev) {
+                var e = ev || event;
+                context.clearRect(0,0,canvas.width,canvas.height);
+                context.beginPath();
+                context.arc(arg[6],arg[7],10,0,Math.PI*2);
+                context.fillStyle = "#ccc";
+                context.fill();
+
+                if(context.isPointInPath(e.offsetX,e.offsetY)){
+                    canvas.onmousemove = function (ev) {
+                        var e = ev || event;
+                        arg[6] = e.offsetX;
+                        arg[7] = e.offsetY;
+                        console.log(e.offsetX);
+                        context.clearRect(0,0,canvas.width,canvas.height);
+                        dragCurve(arg)
+                    }
+                }
+                dragCurve(arg);
+            }
+
+        }
+        
+        
+        
+        // 清除辅助线
+        var b = true;
+        btn_span[4].onclick = function () {
+            if(b){
+                context.clearRect(0,0,canvas.width,canvas.height);
+                // 曲线的绘制
+                context.beginPath();
+                context.moveTo(arg[0],arg[1]);
+                context.bezierCurveTo(arg[2],arg[3],arg[4],arg[5],arg[6],arg[7]);
+                context.strokeStyle = "#000";
+                context.stroke();
+                event.target.classList.add("active");
+                b = false;
+            }else{
+                dragCurve(arg);
+                b = true;
+                event.target.classList.remove("active");
+            }
+
+        }
+
+
+
+
+        // 鼠标弹起，清空移动的所有事件
+        canvas.onmouseup = function () {
+            canvas.onmousemove = null;
+        }
+
+    }
+
+    function addActive(){
+        document.getElementsByClassName("active")[0].classList.remove("active");
+        event.target.classList.add("active");
+    }
+
+
+    function dragCurve(arg){
+        // 辅助线的绘制
+        context.beginPath()
+        context.moveTo(arg[0],arg[1]);
+        context.lineTo(arg[2],arg[3]);
+        context.lineTo(arg[4],arg[5]);
+        context.lineTo(arg[6],arg[7]);
+        context.strokeStyle = "#ccc";
+        context.stroke()
+
+
+        // 控制点的绘制
+
+        context.beginPath();
+        context.arc(arg[0],arg[1],10,0,Math.PI*2);
+        context.fillStyle = "#ccc";
+        context.fill();
+        context.beginPath();
+        context.arc(arg[2],arg[3],10,0,Math.PI*2);
+        context.fillStyle = "#ccc";
+        context.fill();
+        context.beginPath();
+        context.arc(arg[4],arg[5],10,0,Math.PI*2);
+        context.fillStyle = "#ccc";
+        context.fill();
+        context.beginPath();
+        context.arc(arg[6],arg[7],10,0,Math.PI*2);
+        context.fillStyle = "#ccc";
+        context.fill();
+
+
+        // 曲线的绘制
+        context.beginPath();
+        context.moveTo(arg[0],arg[1]);
+        context.bezierCurveTo(arg[2],arg[3],arg[4],arg[5],arg[6],arg[7]);
+        context.strokeStyle = "#000";
+        context.stroke();
+    }
+
+
+
+
+
+    function test() {
+        alert(1)
+    }
+</script>
+</body>
+</html>

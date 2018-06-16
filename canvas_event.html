@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<canvas id="canvas" width="300" height="300"></canvas>
+
+<script>
+
+      var canvas = document.getElementById("canvas");
+      var context = canvas.getContext("2d");
+
+      // 定义了一个数组
+      var balls = [];
+
+
+      /*
+      * 事件交互，点击事件为例
+      * isPointInPath(横坐标，纵坐标)
+      * */
+
+      for(var i=1;i<10;i++){
+          var ball = {
+              x:Math.random()*canvas.width,
+              y:Math.random()*canvas.height,
+              r:Math.random()*50+20
+          }
+          balls.push(ball)
+      }
+
+      draw();
+
+      var x = document.getElementById("canvas");
+
+      x.onclick = function(){
+          // 标准的获取鼠标点击canvas画布的坐标的公式
+          var x = event.pageX - canvas.getBoundingClientRect().left;
+          var y = event.pageY - canvas.getBoundingClientRect().top;
+          for(var i =0;i < balls.length;i++){
+              context.beginPath();
+              context.arc(balls[i].x,balls[i].y,balls[i].r,0,Math.PI*2);
+              if(context.isPointInPath(x,y)){
+                  context.fillStyle = "red";
+                  context.fill();
+              }
+          }
+      }
+
+
+
+
+
+
+
+
+
+
+
+      function draw(){
+          context.fillStyle = "blue";
+          for(var i =0;i< balls.length;i++){
+              context.beginPath();
+              context.arc(balls[i].x,balls[i].y,balls[i].r,0, Math.PI*2);
+              context.fill();
+          }
+      }
+
+
+
+
+
+
+
+
+
+</script>
+</body>
+</html>

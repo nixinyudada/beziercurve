@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+<canvas width="700" height="700" id="canvas" style="border: 1px solid #ccc;"></canvas>
+
+<script>
+    var canvas = document.getElementById("canvas");
+    var context = canvas.getContext("2d");
+
+    context.beginPath();
+    context.moveTo(30,270);
+    context.lineTo(60,40);
+    context.lineTo(270,40);
+    context.closePath();
+    context.strokeStyle = "red";
+    context.stroke();
+
+
+    var test_arg = [30,270];
+    var test_arg2 = [60,40];
+    var test_arg3 = [270,40];
+
+    context.beginPath()
+    context.arc(30,270,10,0,Math.PI*2);
+    context.fill()
+
+    canvas.onmousedown = function(){
+            /*context.beginPath()
+            context.arc(test_arg[0],test_arg[1],10,0,Math.PI*2);
+            context.fill()*/
+            /*var x = event.pageX - canvas.getBoundingClientRect().left;
+            var y = event.pageY - canvas.getBoundingClientRect().top;*/
+       /* context.beginPath()
+        context.arc(test_arg[0],test_arg[1],10,0,Math.PI*2);
+        context.fill()
+            if(context.isPointInPath(test_arg[0],test_arg[1])){
+                test()
+                canvas.onmousemove = function () {
+                    test()
+                    test_arg[0] = event.pageX;
+                    test_arg[1] = event.pageY;
+                }
+            }*/
+
+
+
+
+
+
+
+
+
+    }
+
+
+
+
+
+
+
+
+
+    canvas.onmouseup = function(){
+        canvas.onmousemove = null;
+    }
+
+    function test(){
+        context.clearRect(0,0,canvas.width,canvas.height)
+        context.beginPath();
+        context.moveTo(test_arg[0],test_arg[1]);
+        context.lineTo(test_arg2[0],test_arg2[1]);
+        context.lineTo(test_arg3[0],test_arg3[1]);
+        context.closePath();
+        context.strokeStyle = "red";
+        context.stroke();
+        context.beginPath()
+        context.arc(test_arg[0],test_arg[1],10,0,Math.PI*2);
+        context.fill()
+
+
+        context.beginPath()
+        context.arc(test_arg2[0],test_arg2[1],10,0,Math.PI*2);
+        context.fill()
+    }
+
+
+    function t2() {
+        context.beginPath()
+        context.arc(test_arg2[0],test_arg2[1],10,0,Math.PI*2);
+        context.fill()
+        if(context.isPointInPath(test_arg2[0],test_arg2[1])){
+            test()
+            canvas.onmousemove = function () {
+                test()
+                test_arg2[0] = event.pageX;
+                test_arg2[1] = event.pageY;
+            }
+        }
+    }
+
+    function t1() {
+        context.beginPath()
+        context.arc(test_arg[0],test_arg[1],10,0,Math.PI*2);
+        context.fill()
+        if(context.isPointInPath(test_arg[0],test_arg[1])){
+            test()
+            canvas.onmousemove = function () {
+                test()
+                test_arg[0] = event.pageX;
+                test_arg[1] = event.pageY;
+            }
+        }
+    }
+
+
+
+</script>
+</body>
+</html>

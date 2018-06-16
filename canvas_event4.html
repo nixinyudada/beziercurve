@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+</head>
+<body>
+<canvas id="canvas" width="500" height="500" style="border: 1px solid #ccc;"></canvas>
+<button id="p0" style="background: #000">p0</button>
+<button id="p1" style="color: green;background: green;">p1</button>
+<button id="p2" style="color: blue;background: blue">p2</button>
+<script>
+    var canvas = document.getElementById("canvas");
+    var context = canvas.getContext("2d");
+
+    context.clearRect(0,0,context.width,context.height)
+    context.beginPath();
+    context.moveTo(30,270);
+    context.lineTo(60,40);
+    context.lineTo(270,40);
+    context.closePath();
+    context.strokeStyle = "red";
+    context.stroke();
+
+    context.beginPath()
+    context.arc(30,270,10,0,Math.PI*2);
+    context.fillStyle = "#000";
+    context.fill()
+    context.beginPath()
+    context.arc(60,40,10,0,Math.PI*2);
+    context.fillStyle = "green";
+    context.fill()
+    context.beginPath()
+    context.arc(270,40,10,0,Math.PI*2);
+    context.fillStyle = "blue";
+    context.fill()
+
+
+    var arr1 = [30,270];
+    var arr2 = [60,40];
+    var arr3 = [270,40];
+    document.getElementById("p0").onclick = function(){
+        canvas.onmousedown = function(ev){
+            context.beginPath()
+            context.arc(arr1[0],arr1[1],10,0,Math.PI*2);
+            context.fillStyle = "#000";
+            context.fill()
+            var e = ev||event;
+            var x = e.clientX;
+            var y = e.clientY;
+            drag(x,y);
+        }
+
+
+        function drag(x,y){
+            if(context.isPointInPath(x,y)){
+                canvas.onmousemove = function (ev) {
+                    var e = ev||event;
+                    var ax = e.clientX;
+                    var ay = e.clientY;
+                    context.clearRect(0,0,canvas.width,canvas.height)
+                    context.beginPath();
+                    context.moveTo(arr1[0],arr1[1]);
+                    context.lineTo(arr2[0],arr2[1]);
+                    context.lineTo(arr3[0],arr3[1]);
+                    context.closePath();
+                    context.strokeStyle = "red";
+                    context.stroke();
+
+                    context.beginPath()
+                    context.arc(ax,ay,10,0,Math.PI*2);
+                    context.fillStyle = "#000";
+                    context.fill()
+                    context.beginPath()
+                    context.arc(arr2[0],arr2[1],10,0,Math.PI*2);
+                    context.fillStyle = "green";
+                    context.fill()
+                    context.beginPath()
+                    context.arc(arr3[0],arr3[1],10,0,Math.PI*2);
+                    context.fillStyle = "blue";
+                    context.fill()
+
+                    arr1[0] = ax
+                    arr1[1] = ay
+                }
+            }
+
+        }
+    }
+
+    document.getElementById("p1").onclick = function(){
+        canvas.onmousedown = function(ev){
+            context.beginPath()
+            context.arc(arr2[0],arr2[1],10,0,Math.PI*2);
+            context.fillStyle = "green";
+            context.fill()
+            var e = ev||event;
+            var x = e.clientX;
+            var y = e.clientY;
+            context.clearRect(0,0,context.width,context.height)
+            drag(x,y);
+        }
+
+
+        function drag(x,y){
+            if(context.isPointInPath(x,y)){
+                canvas.onmousemove = function (ev) {
+                    var e = ev||event;
+                    var ax = e.clientX;
+                    var ay = e.clientY;
+                    context.clearRect(0,0,canvas.width,canvas.height)
+                    context.beginPath();
+                    context.moveTo(arr1[0],arr1[1]);
+                    context.lineTo(arr2[0],arr2[1]);
+                    context.lineTo(arr3[0],arr3[1]);
+                    context.closePath();
+                    context.strokeStyle = "red";
+                    context.stroke();
+
+                    context.beginPath()
+                    context.arc(arr1[0],arr1[1],10,0,Math.PI*2);
+                    context.fillStyle = "#000";
+                    context.fill()
+                    context.beginPath()
+                    context.arc(ax,ay,10,0,Math.PI*2);
+                    context.fillStyle = "green";
+                    context.fill()
+                    context.beginPath()
+                    context.arc(arr3[0],arr3[1],10,0,Math.PI*2);
+                    context.fillStyle = "blue";
+                    context.fill()
+
+                    arr2[0] = ax
+                    arr2[1] = ay
+                }
+            }
+
+        }
+    }
+
+    document.getElementById("p2").onclick = function(){
+        canvas.onmousedown = function(ev){
+            context.beginPath()
+            context.arc(arr3[0],arr3[1],10,0,Math.PI*2);
+            context.fillStyle = "blue";
+            context.fill()
+            var e = ev||event;
+            var x = e.clientX;
+            var y = e.clientY;
+            context.clearRect(0,0,context.width,context.height)
+            drag(x,y);
+        }
+
+
+        function drag(x,y){
+            if(context.isPointInPath(x,y)){
+                canvas.onmousemove = function (ev) {
+                    var e = ev||event;
+                    var ax = e.clientX;
+                    var ay = e.clientY;
+                    context.clearRect(0,0,canvas.width,canvas.height)
+                    context.beginPath();
+                    context.moveTo(arr1[0],arr1[1]);
+                    context.lineTo(arr2[0],arr2[1]);
+                    context.lineTo(arr3[0],arr3[1]);
+                    context.closePath();
+                    context.strokeStyle = "red";
+                    context.stroke();
+
+                    context.beginPath()
+                    context.arc(arr1[0],arr1[1],10,0,Math.PI*2);
+                    context.fillStyle = "#000";
+                    context.fill()
+                    context.beginPath()
+                    context.arc(arr2[0],arr2[1],10,0,Math.PI*2);
+                    context.fillStyle = "green";
+                    context.fill()
+                    context.beginPath()
+                    context.arc(ax,ay,10,0,Math.PI*2);
+                    context.fillStyle = "blue";
+                    context.fill()
+
+                    arr3[0] = ax
+                    arr3[1] = ay
+                }
+            }
+
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+    canvas.onmouseup = function(){
+        canvas.onmousemove = null;
+    }
+
+</script>
+
+</body>
+</html>

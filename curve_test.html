@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<canvas id="canvas" width="300" height="300" style="border: 1px solid #ccc;"></canvas>
+
+<script>
+var canvas = document.getElementById("canvas");
+var context = canvas.getContext('2d');
+context.beginPath();
+context.moveTo(30,240);
+context.lineTo(80,60);
+context.lineTo(220,60);
+context.lineTo(260,240)
+context.strokeStyle="#000";
+context.stroke();  // 闭合
+
+ // 绘制贝塞尔曲线
+    context.beginPath();
+    context.moveTo(30,240);
+    context.bezierCurveTo(80,60,220,60,260,240);
+    context.strokeStyle = "red";
+    context.stroke();
+
+    context.onclick = function(){
+        alert(1)
+    }
+</script>
+</body>
+</html>
